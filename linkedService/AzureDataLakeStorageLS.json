@@ -1,0 +1,12 @@
+{
+	"name": "AzureDataLakeStorageLS",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "access for adf to access my storage containers",
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://nikhildamg2025.dfs.core.windows.net/"
+		}
+	}
+}
