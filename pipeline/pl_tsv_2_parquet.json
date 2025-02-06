@@ -28,7 +28,7 @@
 						"type": "ParquetSource",
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
-							"recursive": true,
+							"recursive": false,
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -46,13 +46,7 @@
 				"inputs": [
 					{
 						"referenceName": "Parquet1",
-						"type": "DatasetReference",
-						"parameters": {
-							"filename": {
-								"value": "@variables('myFileName')",
-								"type": "Expression"
-							}
-						}
+						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
@@ -73,16 +67,7 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [
-					{
-						"name": "Source",
-						"value": "bronze//Seattle_Pet_Licenses_20250205.csv"
-					},
-					{
-						"name": "Destination",
-						"value": "silver//@{variables('myFileName')}"
-					}
-				],
+				"userProperties": [],
 				"typeProperties": {
 					"source": {
 						"type": "DelimitedTextSource",
@@ -106,19 +91,6 @@
 					},
 					"enableStaging": false,
 					"validateDataConsistency": true,
-					"logSettings": {
-						"enableCopyActivityLog": true,
-						"copyActivityLogSettings": {
-							"logLevel": "Warning",
-							"enableReliableLogging": false
-						},
-						"logLocationSettings": {
-							"linkedServiceName": {
-								"referenceName": "AzureDataLakeStorageLS",
-								"type": "LinkedServiceReference"
-							}
-						}
-					},
 					"translator": {
 						"type": "TabularTranslator",
 						"typeConversion": true,
@@ -130,7 +102,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DelimitedText3",
+						"referenceName": "DelimitedText6",
 						"type": "DatasetReference"
 					}
 				],
@@ -140,7 +112,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": {
-								"value": "@variables('myFileName')",
+								"value": "@variables('fileName')",
 								"type": "Expression"
 							}
 						}
@@ -149,7 +121,7 @@
 			}
 		],
 		"variables": {
-			"myFileName": {
+			"fileName": {
 				"type": "String",
 				"defaultValue": "pet_lic_data.parquet"
 			}
