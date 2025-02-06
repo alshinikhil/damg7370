@@ -111,8 +111,8 @@
 						"referenceName": "Parquet1",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": {
-								"value": "@variables('fileName')",
+							"fileName": {
+								"value": "@variables('myFileName')",
 								"type": "Expression"
 							}
 						}
@@ -121,9 +121,9 @@
 			}
 		],
 		"variables": {
-			"fileName": {
+			"myFileName": {
 				"type": "String",
-				"defaultValue": "pet_lic_data.parquet"
+				"defaultValue": "pet_lic_data_parquet"
 			}
 		},
 		"annotations": []
