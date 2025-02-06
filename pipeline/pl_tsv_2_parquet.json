@@ -5,8 +5,6 @@
 			{
 				"name": "Parquet_2_snowflake",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "TSV_2_parquet",
@@ -46,7 +44,10 @@
 				"inputs": [
 					{
 						"referenceName": "Parquet1",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"fileName": "pet_lic_data.parquet"
+						}
 					}
 				],
 				"outputs": [
