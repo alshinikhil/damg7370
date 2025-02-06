@@ -13,7 +13,7 @@
 				"fileName": "Seattle_Pet_Licenses_20250205.csv",
 				"fileSystem": "bronze"
 			},
-			"columnDelimiter": ",",
+			"columnDelimiter": "\t",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
