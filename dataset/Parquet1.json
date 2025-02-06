@@ -5,13 +5,19 @@
 			"referenceName": "AzureDataLakeStorageLS",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"fileName": {
+				"type": "string",
+				"defaultValue": "pet_lic_data_parquet"
+			}
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": {
-					"value": "@dataset().filename",
+					"value": "@dataset().fileName",
 					"type": "Expression"
 				},
 				"fileSystem": "silver"
