@@ -16,10 +16,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": {
-					"value": "@dataset().filename",
-					"type": "Expression"
-				},
+				"fileName": "pet_lic_data.parquet",
 				"fileSystem": "silver"
 			},
 			"compressionCodec": "snappy"
