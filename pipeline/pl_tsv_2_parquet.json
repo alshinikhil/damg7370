@@ -55,7 +55,14 @@
 							"type": "SnowflakeImportCopyCommand"
 						}
 					},
-					"enableStaging": false
+					"enableStaging": true,
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "ls_blob1",
+							"type": "LinkedServiceReference"
+						},
+						"path": "stagestorage"
+					}
 				},
 				"inputs": [
 					{
