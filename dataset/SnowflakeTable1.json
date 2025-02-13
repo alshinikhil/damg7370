@@ -9,8 +9,8 @@
 		"type": "SnowflakeV2Table",
 		"schema": [],
 		"typeProperties": {
-			"schema": "PET_SCHEMA",
-			"table": "PET_LIC_STG"
+			"schema": "NYPD_SCHEMA",
+			"table": "NYPD_CRIME_STAGE"
 		}
 	}
 }
