@@ -11,7 +11,7 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": "nypd_dataset1.csv",
-				"fileSystem": "bronze"
+				"fileSystem": "silver"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
