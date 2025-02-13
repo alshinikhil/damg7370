@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "NYPD_pipeline",
 	"properties": {
 		"activities": [
 			{
