@@ -20,6 +20,13 @@
 						"type": "DataFlowReference",
 						"parameters": {
 							"Job_Id": "\"10\""
+						},
+						"datasetParameters": {
+							"readTSVfile": {
+								"Directory": "na",
+								"Filename": "Seattle_Pet_Licenses_new.tsv",
+								"FileDilemeter": "\\t"
+							}
 						}
 					},
 					"compute": {
