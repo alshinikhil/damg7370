@@ -19,6 +19,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "PARQUET"
+				},
+				{
+					"dataset": {
+						"referenceName": "SnowflakeTable1",
+						"type": "DatasetReference"
+					},
+					"name": "snowflake"
 				}
 			],
 			"transformations": [
@@ -74,7 +81,28 @@
 				"     preCommands: [],",
 				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> PARQUET"
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          LIC_ISSUE_DATE,",
+				"          PRIMARY_BREED,",
+				"          SECONDARY_BREED,",
+				"          ZIP_CODE,",
+				"          SPECIES,",
+				"          LICENSE_NUMBER,",
+				"          ANIMAL_NAME,",
+				"          JOB_EXC_ID,",
+				"          JOB_EXC_DT",
+				"     )) ~> PARQUET",
+				"PickCleanedColumn sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     stageInsert: true) ~> snowflake"
 			]
 		}
 	}

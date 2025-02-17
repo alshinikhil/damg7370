@@ -9,8 +9,8 @@
 		"type": "SnowflakeV2Table",
 		"schema": [],
 		"typeProperties": {
-			"schema": "NYPD_SCHEMA",
-			"table": "NYPD_CRIME_STAGE"
+			"schema": "pet_schema",
+			"table": "breed_dim2"
 		}
 	}
 }
