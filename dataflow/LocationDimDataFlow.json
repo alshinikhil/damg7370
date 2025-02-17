@@ -33,7 +33,15 @@
 				"parameters{",
 				"     DI_JOB_ID as string",
 				"}",
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          state_fips as short,",
+				"          state as string,",
+				"          state_abbr as string,",
+				"          zipcode as string,",
+				"          county as string,",
+				"          city as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> LocationDim",
 				"LocationDim keyGenerate(output(SK_ID as long),",
@@ -48,9 +56,15 @@
 				"     updateable:false,",
 				"     upsertable:false,",
 				"     format: 'table',",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     stageInsert: true) ~> LoadLocDim"
+				"     stageInsert: true,",
+				"     mapColumn(",
+				"          state,",
+				"          zip = zipcode,",
+				"          city,",
+				"          LOCATION_SK = SK_ID,",
+				"          DI_CREATED_DT = DI_CREATED_DATE,",
+				"          DI_JOB_ID",
+				"     )) ~> LoadLocDim"
 			]
 		}
 	}
