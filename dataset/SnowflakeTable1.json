@@ -9,7 +9,7 @@
 		"type": "SnowflakeV2Table",
 		"schema": [],
 		"typeProperties": {
-			"schema": "pet_schema",
+			"schema": "PET_SCHEMA",
 			"table": "V2_PET_LICENSE_STAGE"
 		}
 	}
