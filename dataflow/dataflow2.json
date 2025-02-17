@@ -12,11 +12,19 @@
 					"name": "StageTableSource"
 				},
 				{
-					"name": "source1"
+					"dataset": {
+						"referenceName": "BreedDim",
+						"type": "DatasetReference"
+					},
+					"name": "BreedDimInput"
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "join1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          LIC_ISSUE_DATE as date,",
@@ -33,7 +41,14 @@
 				"     validateSchema: false,",
 				"     format: 'table') ~> StageTableSource",
 				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> source1"
+				"     validateSchema: false,",
+				"     query: 'SELECT NVL(MAX(BREED_SK),0) as MaxBreedSK from pet_schema.breed_dim2',",
+				"     format: 'query') ~> BreedDimInput",
+				"StageTableSource, BreedDimInput join(1==1,",
+				"     joinType:'cross',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1"
 			]
 		}
 	}
