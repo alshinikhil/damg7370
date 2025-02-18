@@ -105,7 +105,7 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     query: 'select nvl(max(PET_LIC_SK),0) AS MaxPetSK from pet_schema.pet_lic_fct2',",
+				"     query: 'select nvl(max(PET_LIC_SK),0) AS MAXPETSK from pet_schema.pet_lic_fct2',",
 				"     format: 'query') ~> MaxPETSK",
 				"source(output(",
 				"          DT as date,",
