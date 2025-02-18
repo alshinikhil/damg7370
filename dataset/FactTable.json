@@ -1,0 +1,16 @@
+{
+	"name": "FactTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LocationDim",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SnowflakeV2Table",
+		"schema": [],
+		"typeProperties": {
+			"schema": "PET_SCHEMA",
+			"table": "PET_LIC_FCT2"
+		}
+	}
+}
