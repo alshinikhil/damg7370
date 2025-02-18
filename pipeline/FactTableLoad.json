@@ -1,5 +1,5 @@
 {
-	"name": "pipeline2",
+	"name": "FactTableLoad",
 	"properties": {
 		"activities": [
 			{
@@ -15,6 +15,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"dataflow": {
+						"referenceName": "FactTableLoad",
+						"type": "DataFlowReference"
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
