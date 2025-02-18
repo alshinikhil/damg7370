@@ -19,7 +19,10 @@
 						"referenceName": "BreedDim",
 						"type": "DataFlowReference",
 						"parameters": {
-							"DI_JOB_ID": "'59'"
+							"DI_JOB_ID": {
+								"value": "'@{substring(pipeline().RunId, 1,10)}'",
+								"type": "Expression"
+							}
 						}
 					},
 					"compute": {
