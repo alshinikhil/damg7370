@@ -34,7 +34,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "DateDim2",
+						"referenceName": "DATE_DIM",
 						"type": "DatasetReference"
 					},
 					"name": "DateDim"
@@ -43,6 +43,9 @@
 			"sinks": [],
 			"transformations": [],
 			"scriptLines": [
+				"parameters{",
+				"     parameter1 as string",
+				"}",
 				"source(output(",
 				"          LIC_ISSUE_DATE as date,",
 				"          SECONDARY_BREED as string,",
