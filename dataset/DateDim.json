@@ -1,0 +1,16 @@
+{
+	"name": "DateDim",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DateDim",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SnowflakeV2Table",
+		"schema": [],
+		"typeProperties": {
+			"schema": "PET_SCHEMA",
+			"table": "DATE_DIM2"
+		}
+	}
+}
