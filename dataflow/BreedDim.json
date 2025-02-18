@@ -81,7 +81,7 @@
 				"aggregate1 keyGenerate(output(RowNum as long),",
 				"     startAt: 1L,",
 				"     stepValue: 1L) ~> surrogateKey1",
-				"surrogateKey1 derive(Breed_SK = MAXBREEDSK + RowNum,",
+				"surrogateKey1 derive(BREED_SK = MAXBREEDSK + RowNum,",
 				"          DI_CREATED_DT = currentDate(),",
 				"          DI_JOB_ID = $DI_JOB_ID) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
@@ -96,7 +96,7 @@
 				"          SPECIES,",
 				"          PRIMARY_BREED,",
 				"          SECONDARY_BREED,",
-				"          BREED_SK = Breed_SK,",
+				"          BREED_SK,",
 				"          DI_CREATED_DT,",
 				"          DI_JOB_ID",
 				"     )) ~> BreedDimImport"
