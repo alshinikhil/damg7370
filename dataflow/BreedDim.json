@@ -96,7 +96,7 @@
 				"          SPECIES,",
 				"          PRIMARY_BREED,",
 				"          SECONDARY_BREED,",
-				"          Breed_SK,",
+				"          BREED_SK = Breed_SK,",
 				"          DI_CREATED_DT,",
 				"          DI_JOB_ID",
 				"     )) ~> BreedDimImport"
