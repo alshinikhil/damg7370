@@ -1,5 +1,5 @@
 {
-	"name": "dataflow2",
+	"name": "FactTableLoad",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
