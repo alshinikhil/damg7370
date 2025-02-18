@@ -1,8 +1,8 @@
 {
-	"name": "DateDim",
+	"name": "DateDim2",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "DateDim",
+			"referenceName": "LocationDim",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],

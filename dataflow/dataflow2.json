@@ -34,7 +34,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "DateDim",
+						"referenceName": "DateDim2",
 						"type": "DatasetReference"
 					},
 					"name": "DateDim"
@@ -82,21 +82,7 @@
 				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'table') ~> MaxPETSK",
-				"source(output(",
-				"          DT as string,",
-				"          ABRV_DAY_NAME as string,",
-				"          MONTH_NAME as string,",
-				"          START_DAY_OF_MONTH as string,",
-				"          END_DAY_OF_MONTH as string,",
-				"          QUARTER_NUM as string,",
-				"          DAY_OF_WEEK as string,",
-				"          IS_WEEKEND as string,",
-				"          YEAR_NUM as string,",
-				"          MONTH_NUM as string,",
-				"          DAY_NUM as string,",
-				"          DATE_DIM_SK as string",
-				"     ),",
-				"     allowSchemaDrift: true,",
+				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'table') ~> DateDim"
 			]
