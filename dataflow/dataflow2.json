@@ -19,7 +19,15 @@
 					"name": "BreedDimInput"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "BreedDim",
+						"type": "DatasetReference"
+					},
+					"name": "BreedDimImport"
+				}
+			],
 			"transformations": [
 				{
 					"name": "join1"
@@ -75,7 +83,23 @@
 				"     stepValue: 1L) ~> surrogateKey1",
 				"surrogateKey1 derive(Breed_SK = MAXBREEDSK + RowNum,",
 				"          DI_CREATED_DT = currentDate(),",
-				"          DI_JOB_ID = ERROR_FUNCTION('')) ~> derivedColumn1"
+				"          DI_JOB_ID = $DI_JOB_ID) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     stageInsert: true,",
+				"     mapColumn(",
+				"          SPECIES,",
+				"          PRIMARY_BREED,",
+				"          SECONDARY_BREED,",
+				"          Breed_SK,",
+				"          DI_CREATED_DT,",
+				"          DI_JOB_ID",
+				"     )) ~> BreedDimImport"
 			]
 		}
 	}
