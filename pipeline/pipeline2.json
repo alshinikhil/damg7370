@@ -136,7 +136,7 @@
 							{
 								"source": {
 									"name": "Total",
-									"type": "String"
+									"type": "Decimal"
 								},
 								"sink": {
 									"name": "TOTAL",
