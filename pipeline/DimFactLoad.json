@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "DimLoadAssignment",
+				"name": "Data flow1",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -15,6 +15,16 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"dataflow": {
+						"referenceName": "dataflow2",
+						"type": "DataFlowReference",
+						"parameters": {
+							"DI_JOB_ID": {
+								"value": "'@{pipeline().RunId}'",
+								"type": "Expression"
+							}
+						}
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
