@@ -10,7 +10,9 @@
 		"schema": [
 			{
 				"name": "CUSTOMERID",
-				"type": "VARCHAR"
+				"type": "NUMBER",
+				"precision": 30,
+				"scale": 0
 			},
 			{
 				"name": "CUSTOMERNAME",
