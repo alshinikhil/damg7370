@@ -10,26 +10,43 @@
 						"type": "DatasetReference"
 					},
 					"name": "sourceStage"
+				},
+				{
+					"dataset": {
+						"referenceName": "SourceDim",
+						"type": "DatasetReference"
+					},
+					"name": "SourceDim"
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "join1"
+				},
+				{
+					"name": "aggregate1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
-				"          INVOICEID as decimal(30,0),",
 				"          CUSTOMERID as decimal(30,0),",
-				"          INVOICEDATE as date,",
-				"          SHIPTO as string,",
-				"          SHIPTOCITY as string,",
-				"          SHIPTOCOUNTRY as string,",
-				"          SALESPERSONID as string,",
-				"          SALESPERSONNAME as string,",
-				"          TOTALPRODUCTCOUNT as decimal(10,4),",
-				"          TOTAL as decimal(38,0)",
+				"          CUSTOMERNAME as string,",
+				"          BILLTO as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     format: 'table') ~> sourceStage"
+				"     format: 'table') ~> sourceStage",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table') ~> SourceDim",
+				"sourceStage, SourceDim join(1==1,",
+				"     joinType:'cross',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 aggregate(groupBy(CUSTOMERID,",
+				"          {} = ERROR_FUNCTION(''))) ~> aggregate1"
 			]
 		}
 	}
