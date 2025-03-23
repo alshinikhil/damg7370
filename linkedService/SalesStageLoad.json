@@ -8,10 +8,10 @@
 			"authenticationType": "Basic",
 			"accountIdentifier": "wta03029.east-us-2.azure",
 			"user": "FIRST_USER",
-			"database": "pet_DB",
+			"database": "assignments",
 			"warehouse": "PET_WH",
 			"role": "USER_ROLE2",
-			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDc0QzNBOEQ3LTI5RTktNDFGQS1BN0RCLTkwRTkxOTAzMUFBRF9kMTcxMTBmZS0xMzAyLTRmYWQtOTM4MS0yZTMwNWE0YTE0ZDciDQp9"
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDc0QzNBOEQ3LTI5RTktNDFGQS1BN0RCLTkwRTkxOTAzMUFBRF9iZDJhYzI1Ni01NjU5LTQ0YjItODE3Yi0xMDJmYjY0OWM2ZTQiDQp9"
 		}
 	}
 }
