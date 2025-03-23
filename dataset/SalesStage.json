@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "sales_data.csv",
+				"fileName": "customer_data_part1.csv",
 				"fileSystem": "silver"
 			},
 			"columnDelimiter": ",",
@@ -18,6 +18,19 @@
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "customerid",
+				"type": "String"
+			},
+			{
+				"name": "CustomerName",
+				"type": "String"
+			},
+			{
+				"name": "billTo",
+				"type": "String"
+			}
+		]
 	}
 }
