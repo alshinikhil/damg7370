@@ -1,0 +1,165 @@
+{
+	"name": "pipeline2",
+	"properties": {
+		"activities": [
+			{
+				"name": "Sales_Stage",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": false,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SnowflakeV2Sink",
+						"importSettings": {
+							"type": "SnowflakeImportCopyCommand"
+						}
+					},
+					"enableStaging": true,
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "ls_blob1",
+							"type": "LinkedServiceReference"
+						},
+						"path": "stagestorage"
+					},
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "invoiceId",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "INVOICEID",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "customerid",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "CUSTOMERID",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "invoiceDate",
+									"type": "Date"
+								},
+								"sink": {
+									"name": "INVOICEDATE",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "ShipTo",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SHIPTO",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ShipTo_City",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SHIPTOCITY",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ShipTo_Country",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SHIPTOCOUNTRY",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SalespersonPersonID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SALESPERSONID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SalespersonName",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SALESPERSONNAME",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "total_product_cnt",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "TOTALPRODUCTCOUNT",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "Total",
+									"type": "String"
+								},
+								"sink": {
+									"name": "TOTAL",
+									"type": "Int64"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SalesStage",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SalesStageLoad",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
