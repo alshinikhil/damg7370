@@ -1,5 +1,5 @@
 {
-	"name": "pipeline2",
+	"name": "LoadingFactNStage2",
 	"properties": {
 		"activities": [
 			{
