@@ -3,8 +3,10 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Data flow1",
+				"name": "LoadingFact",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -31,6 +33,93 @@
 					},
 					"traceLevel": "Fine"
 				}
+			},
+			{
+				"name": "LoadingStage2",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": false,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SnowflakeV2Sink",
+						"importSettings": {
+							"type": "SnowflakeImportCopyCommand"
+						}
+					},
+					"enableStaging": true,
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "ls_blob1",
+							"type": "LinkedServiceReference"
+						},
+						"path": "stagestorage"
+					},
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "customerid",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CUSTOMERID",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "CustomerName",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CUSTOMERNAME",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "billTo",
+									"type": "String"
+								},
+								"sink": {
+									"name": "BILLTO",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DelimitedText11",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "LoadingStage2",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"annotations": []
