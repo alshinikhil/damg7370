@@ -1,0 +1,16 @@
+{
+	"name": "FactInvoice",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SalesStageLoad",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SnowflakeV2Table",
+		"schema": [],
+		"typeProperties": {
+			"schema": "DEMO_SCHEMA",
+			"table": "FCT_INVOICE"
+		}
+	}
+}

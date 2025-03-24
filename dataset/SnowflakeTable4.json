@@ -1,0 +1,16 @@
+{
+	"name": "SnowflakeTable4",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SalesStageLoad",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SnowflakeV2Table",
+		"schema": [],
+		"typeProperties": {
+			"schema": "DEMO_SCHEMA",
+			"table": "SALES_STG"
+		}
+	}
+}

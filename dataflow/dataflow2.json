@@ -1,0 +1,112 @@
+{
+	"name": "dataflow2",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "SnowflakeTable4",
+						"type": "DatasetReference"
+					},
+					"name": "SalesStg"
+				},
+				{
+					"dataset": {
+						"referenceName": "FactInvoice",
+						"type": "DatasetReference"
+					},
+					"name": "FctInvoice"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "factInvoice1",
+						"type": "DatasetReference"
+					},
+					"name": "FctInvoice1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "join1"
+				},
+				{
+					"name": "aggregate1"
+				},
+				{
+					"name": "surrogateKey1"
+				},
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"parameters{",
+				"     DI_JOB_ID as string (\"10\")",
+				"}",
+				"source(output(",
+				"          INVOICEID as decimal(30,0),",
+				"          CUSTOMERID as decimal(30,0),",
+				"          INVOICEDATE as date,",
+				"          SHIPTO as string,",
+				"          SHIPTOCITY as string,",
+				"          SHIPTOCOUNTRY as string,",
+				"          SALESPERSONID as string,",
+				"          SALESPERSONNAME as string,",
+				"          TOTALPRODUCTCOUNT as decimal(10,4),",
+				"          TOTAL as decimal(38,0)",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table') ~> SalesStg",
+				"source(output(",
+				"          MAXINVOICESK as decimal(30,0)",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     query: 'SELECT NVL(MAX(Invoice_SK),0) as MaxInvoiceSK from demo_schema.fct_invoice',",
+				"     format: 'query') ~> FctInvoice",
+				"SalesStg, FctInvoice join(1==1,",
+				"     joinType:'cross',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 aggregate(groupBy(MAXINVOICESK,",
+				"          INVOICEID,",
+				"          CUSTOMERID,",
+				"          INVOICEDATE,",
+				"          TOTALPRODUCTCOUNT,",
+				"          TOTAL),",
+				"     countRow = count(INVOICEID)) ~> aggregate1",
+				"aggregate1 keyGenerate(output(RowNum as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> surrogateKey1",
+				"surrogateKey1 derive(INVOICE_SK = MAXINVOICESK + RowNum,",
+				"          DI_CREATEDDT = currentDate(),",
+				"          PID = $DI_JOB_ID) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     stageInsert: true,",
+				"     mapColumn(",
+				"          INVOICE_SK,",
+				"          INVOICEID,",
+				"          CUSTOMERID,",
+				"          INVOICE_DT = INVOICEDATE,",
+				"          TOTAL_PRODUCT_CNT = TOTALPRODUCTCOUNT,",
+				"          TOTAL_PRODUCT_COST = TOTAL,",
+				"          DI_CREATEDDT,",
+				"          PID",
+				"     )) ~> FctInvoice1"
+			]
+		}
+	}
+}
