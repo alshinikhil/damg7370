@@ -17,15 +17,29 @@
 						"type": "DatasetReference"
 					},
 					"name": "FctInvoice"
+				},
+				{
+					"dataset": {
+						"referenceName": "SnowflakeTable9",
+						"type": "DatasetReference"
+					},
+					"name": "OrphanInvoice"
+				},
+				{
+					"dataset": {
+						"referenceName": "SnowflakeTable10",
+						"type": "DatasetReference"
+					},
+					"name": "CustomerDim"
 				}
 			],
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "factInvoice1",
+						"referenceName": "SnowflakeTable11",
 						"type": "DatasetReference"
 					},
-					"name": "FctInvoice1"
+					"name": "LoadinOrphan"
 				}
 			],
 			"transformations": [
@@ -33,13 +47,13 @@
 					"name": "join1"
 				},
 				{
-					"name": "aggregate1"
+					"name": "union1"
+				},
+				{
+					"name": "split1"
 				},
 				{
 					"name": "surrogateKey1"
-				},
-				{
-					"name": "derivedColumn1"
 				}
 			],
 			"scriptLines": [
@@ -68,25 +82,41 @@
 				"     validateSchema: false,",
 				"     query: 'SELECT NVL(MAX(Invoice_SK),0) as MaxInvoiceSK from demo_schema.fct_invoice',",
 				"     format: 'query') ~> FctInvoice",
-				"SalesStg, FctInvoice join(1==1,",
-				"     joinType:'cross',",
+				"source(output(",
+				"          INVOICE_SK as decimal(30,0),",
+				"          INVOICE_ID as decimal(30,0),",
+				"          CUSTOMER_SK as decimal(30,0),",
+				"          INVOICE_DT as date,",
+				"          TOTAL_PRODUCT_CNT as decimal(30,0),",
+				"          TOTAL_PRODUCT_COST as decimal(30,0),",
+				"          DI_CREATEDDT as timestamp,",
+				"          PID as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table') ~> OrphanInvoice",
+				"source(output(",
+				"          CUSTOMER_SK as decimal(38,0),",
+				"          CUSTOMER_ID as decimal(38,0),",
+				"          CUSTOMER_NAME as string,",
+				"          DI_CREATEDDT as timestamp,",
+				"          PID as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table') ~> CustomerDim",
+				"union1, CustomerDim join(CUSTOMERID == CUSTOMER_ID,",
+				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join1",
-				"join1 aggregate(groupBy(MAXINVOICESK,",
-				"          INVOICEID,",
-				"          CUSTOMERID,",
-				"          INVOICEDATE,",
-				"          TOTALPRODUCTCOUNT,",
-				"          TOTAL),",
-				"     countRow = count(INVOICEID)) ~> aggregate1",
-				"aggregate1 keyGenerate(output(RowNum as long),",
+				"SalesStg, OrphanInvoice union(byName: true)~> union1",
+				"join1 split(isNull(CUSTOMER_ID),",
+				"     disjoint: false) ~> split1@(Orphan, Valid)",
+				"split1@Valid keyGenerate(output(RowNum as long),",
 				"     startAt: 1L,",
 				"     stepValue: 1L) ~> surrogateKey1",
-				"surrogateKey1 derive(INVOICE_SK = MAXINVOICESK + RowNum,",
-				"          DI_CREATEDDT = currentDate(),",
-				"          PID = $DI_JOB_ID) ~> derivedColumn1",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"split1@Orphan sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
 				"     insertable:true,",
@@ -95,17 +125,7 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     stageInsert: true,",
-				"     mapColumn(",
-				"          INVOICE_SK,",
-				"          INVOICE_ID = INVOICEID,",
-				"          CUSTOMER_ID = CUSTOMERID,",
-				"          INVOICE_DT = INVOICEDATE,",
-				"          TOTAL_PRODUCT_CNT = TOTALPRODUCTCOUNT,",
-				"          TOTAL_PRODUCT_COST = TOTAL,",
-				"          DI_CREATEDDT,",
-				"          PID",
-				"     )) ~> FctInvoice1"
+				"     stageInsert: true) ~> LoadinOrphan"
 			]
 		}
 	}
