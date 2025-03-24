@@ -110,7 +110,7 @@
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join1",
 				"SalesStg, OrphanInvoice union(byName: true)~> union1",
-				"join1 split(CUSTOMERID == CUSTOMER_ID,",
+				"join1 split(ERROR_FUNCTION(''),",
 				"     disjoint: false) ~> split1@(Valid1, Orphan)",
 				"select1 keyGenerate(output(RowNum as long),",
 				"     startAt: 1L,",
