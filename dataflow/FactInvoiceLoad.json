@@ -98,7 +98,7 @@
 				"     stageInsert: true,",
 				"     mapColumn(",
 				"          INVOICE_SK,",
-				"          INVOICEID,",
+				"          INVOICE_ID = INVOICEID,",
 				"          CUSTOMERID,",
 				"          INVOICE_DT = INVOICEDATE,",
 				"          TOTAL_PRODUCT_CNT = TOTALPRODUCTCOUNT,",
