@@ -91,7 +91,7 @@
 				"          CUSTOMER_ID = CUSTOMERID,",
 				"          CUSTOMER_NAME = CUSTOMERNAME,",
 				"          CUSTOMER_SK,",
-				"          DI_CreatedDt,",
+				"          DI_CREATEDDT = DI_CreatedDt,",
 				"          PID",
 				"     )) ~> CustomerDimSink"
 			]
